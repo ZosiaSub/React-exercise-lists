@@ -64,7 +64,7 @@ class App extends Component {
                   ></ListItem>
               ))}
           </div>
-          <Statistic/>
+          <Statistic data={visibleData}/>
       </div>
     );
   }
