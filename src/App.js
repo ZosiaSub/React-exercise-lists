@@ -64,7 +64,7 @@ class App extends Component {
                   ></ListItem>
               ))}
           </div>
-          <Statistic data={visibleData}/>
+          {!!visibleData.length  && <Statistic  data={visibleData}/>}
       </div>
     );
   }
