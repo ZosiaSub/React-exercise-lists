@@ -3,7 +3,7 @@ import './App.css';
 import FetchForm from "./components/FetchForm";
 import ListItem from "./components/ListItem";
 import { sortComparator } from './Utils';
-import TextForm from './components/TextForm';
+import FilterForm from './components/FilterForm';
 import Statistic from './components/Statistics';
 
 const API_URL = 'https://sandbox-rkrajewski.firebaseio.com/photos.json?orderBy=%22id%22&startAt=0&endAt='
@@ -12,7 +12,8 @@ class App extends Component {
 
     state = {
         fetchedData: [],
-        visibleData: []
+        visibleData: [],
+        value: ""
     }
 
     fetchData = (numberOfItemsToFetch) => {
@@ -25,34 +26,37 @@ class App extends Component {
                         fetchedData,
                         visibleData:fetchedData
 
-                })
+                    })
 
                 })
     }
 
-    filterData = (filterByText) => {
+    onChangeFilterData = (e) => {
+        const filterFormValue = e.target.value
         const { fetchedData } = this.state
         const visibleData = fetchedData.filter(item => {
             return item.title.toLowerCase()
-                .indexOf(filterByText.toLowerCase()) !== -1
+                .indexOf(filterFormValue.toLowerCase()) !== -1
         })
-        console.log(visibleData);
+
         this.setState({
-            visibleData
+            visibleData,
+            filterFormValue
         })
     }
 
+    render() {
 
+    const { fetchedData, visibleData } = this.state
 
-
-  render() {
-
-    const { visibleData } = this.state
 
     return (
       <div className="App">
         <FetchForm onSubmit={this.fetchData}/>
-        <TextForm onSubmit={this.filterData}/>
+          {!!fetchedData.length && <FilterForm
+            onChange={this.onChangeFilterData}
+            filterFormValue={this.state.value}
+        />}
 
           <div>
               {visibleData.map(({id, title, image, rating}) => (

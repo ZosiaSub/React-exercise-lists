@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import Stars from "./Stars";
 
 
 class ListItem extends Component {
@@ -17,7 +18,7 @@ class ListItem extends Component {
                     }
                 </div>
                 <div>{title}</div>
-                <div>{rating}</div>
+                <div><Stars rating={rating}/></div>
             </div>
 
 
